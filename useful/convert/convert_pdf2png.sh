@@ -7,6 +7,6 @@
 for fname1 in *.pdf
 do fname2="$(basename $fname1 .pdf)"
 mkdir ./$fname2
-convert $fname1 ./$fname2/$fname2.png
+convert -units PixelsPerInch $fname1 -resample 300 ./$fname2/$fname2.png
 done
 
