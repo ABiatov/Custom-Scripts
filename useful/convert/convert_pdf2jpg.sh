@@ -8,5 +8,5 @@
 for fname1 in *.pdf
 do fname2="$(basename $fname1 .pdf)"
 mkdir ./$fname2
-convert $fname1 -compress JPEG -quality 100% ./$fname2/$fname2.jpg
+convert -units PixelsPerInch $fname1 -resample 300 -compress JPEG -quality 100% ./$fname2/$fname2.jpg
 done
