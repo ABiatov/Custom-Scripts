@@ -9,7 +9,6 @@
 
 
 library("raster")
-# library("rgdal")
 library("snow")
 
 # Создадтим функцю по замене значений NA числом заданым в переменной mynum
