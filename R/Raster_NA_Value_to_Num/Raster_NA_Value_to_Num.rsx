@@ -11,7 +11,7 @@
 library("raster")
 library("snow")
 
-# Создадтим функцю по замене значений NA числом заданым в переменной mynum
+# Create a function to replace the values of `NA` by the number specified in the variable `My_Num`
 fun_no_null <- function(x) {x[is.na(x)] <- My_Num; return(x) }
 
 beginCluster()
