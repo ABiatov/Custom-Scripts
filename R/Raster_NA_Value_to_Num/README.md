@@ -48,7 +48,7 @@ beginCluster()
 Raster_no_NULL <- calc(img, fun_no_null)
 endCluster()
 ```
-
+### Export result
 Save the raster to a `GeoTiff` file.
 
 To reade about dataType : https://www.rdocumentation.org/packages/raster/versions/2.6-7/topics/dataType
