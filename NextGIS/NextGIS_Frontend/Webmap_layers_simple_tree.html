@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Ngw WebMap Tree</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://exogenica.abspatial.com/leafletlib/zoomhome/leaflet.zoomhome.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body,
+      #wrap,
+      #map {
+        width: 100%;
+        height: 100%;
+      }
+
+      #wrap {
+        display: flex;
+      }
+
+      #tree {
+        width: 35%;
+        min-width: 300px;
+        overflow: auto;
+      }
+
+      .tree-container__item {
+        padding-top: 0.3rem;
+      }
+
+      .tree-container__item input {
+        margin-right: 3px;
+      }
+
+      .tree-container__item-children {
+        padding: 0;
+        padding-top: 3px;
+        padding-left: 15px;
+      }
+    </style>
+
+    <script src="https://unpkg.com/@nextgis/ngw-leaflet@1.8.1/lib/ngw-leaflet.global.prod.js"></script>
+    <script src="https://exogenica.abspatial.com/leafletlib/zoomhome/leaflet.zoomhome.min.js"></script>
+  </head>
+
+  <body>
+    <div id="wrap">
+      <div id="tree"></div>
+      <div id="map"></div>
+    </div>
+    <script>
+	  const zoomHome = new L.Control.zoomHome();
+	  
+	  var foldericon = '<img src=\"https://exogenica.abspatial.com/wp-content/uploads/2021/10/foldericon.png\" width=\"16px\" height=\"16px\" > ';
+    var tree = document.getElementById('tree');
+    var ngwMap = new NgwMap({
+      baseUrl: 'https://abspatial.nextgis.com',
+      target: 'map',
+      osm: true,
+    /*    controls: ["ZOOM", "ATTRIBUTION"],  */
+      controls: [],
+      });
+      ngwMap.onLoad().then(function () {
+        var webMapLayer = ngwMap
+          .addNgwLayer({
+            resource: 129,
+            fit: true,
+          })
+          .then(function (webmap) {
+            tree.appendChild(createTreeItem(webmap.layer));
+            ngwMap.addControl(zoomHome, 'top-left');
+
+          });
+      });
+	  
+
+      function createTreeBranch(layers) {
+        var elem = document.createElement('div');
+        elem.className = 'tree-container__item-children';
+        layers.forEach((x) => {
+          if (x.item) {
+            var item = createTreeItem(x);
+            elem.appendChild(item);
+          }
+        });
+        return elem;
+      }
+
+      function createTreeItem(layer) {
+        var item = layer.item;
+        var elem = document.createElement('div');
+        elem.className = 'tree-container__item';
+        if (item.display_name) {
+          var input = document.createElement('input');
+          input.setAttribute('type', 'checkbox');
+          var value = item.item_type === 'layer' ? item.layer_enabled : true;
+          input.checked = value;
+
+          var visibility = layer.properties.property('visibility');
+          if (visibility) {
+            visibility.emitter.on('change', function (ev) {
+              input.checked = ev.value;
+            });
+            input.onclick = function () {
+              visibility.set(input.checked, {
+                propagation: NgwMap.keys.pressed('ctrl'),
+              });
+            };
+          }
+          elem.appendChild(input);
+
+          var name = document.createElement('span');
+          if (
+          item.item_type === 'group' ||
+          (item.item_type === 'root' && item.children.length)
+        ) { name.innerHTML = foldericon+item.display_name; } else {
+		  name.innerHTML = item.display_name;
+		  }
+          elem.appendChild(name);
+        }
+
+        if (
+          item.item_type === 'group' ||
+          (item.item_type === 'root' && item.children.length)
+        ) {
+          var children = layer.tree.getChildren();
+          var treeBranch = createTreeBranch(children.reverse());
+          elem.appendChild(treeBranch);
+        }
+        return elem;
+      }
+	  
+	  
+
+    </script>
+  </body>
+</html>
