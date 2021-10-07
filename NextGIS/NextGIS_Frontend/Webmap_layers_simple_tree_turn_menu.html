@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://exogenica.abspatial.com/leafletlib/zoomhome/leaflet.zoomhome.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
     <!-- Magnific Popup core CSS file -->
-    <link rel="stylesheet" href="libs/magnific-popup/magnific-popup.css">
+    <link rel="stylesheet" href="https://exogenica.abspatial.com/libs/magnific-popup/magnific-popup.css">
     <style>
       * {
         margin: 0;
@@ -37,7 +37,12 @@
       }
 
       #layers_btn img {
-        border-radius: 10px;
+        width: 50px;
+        height: 50px;
+        border-radius: 25px;
+        border-style:  solid;
+        border-color: #777;
+        border-width: 3px;
       }
 
       #tree {
@@ -73,7 +78,7 @@
     <!-- jQuery 1.7.2+ or Zepto.js 1.0+ -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <!-- Magnific Popup core JS file -->
-    <script src="libs/magnific-popup/jquery.magnific-popup.js"></script>
+    <script src="https://exogenica.abspatial.com/libs/magnific-popup/jquery.magnific-popup.js"></script>
   </head>
 
   <body>
@@ -82,7 +87,7 @@
       <div id="tree"  class="mfp-hide"></div>
       <div id="map">
         <div id="layers_btn"><a href="#tree" class="popup-content"><img src="https://exogenica.abspatial.com/wp-content/uploads/2021/10/btn_menu.png" 
-        width="75" height="75" alt="Слои"></a></div>
+        width="75" height="75" alt="Слои" title="Меню шарів"> </a></div>
       </div>
     </div>
     <script>
