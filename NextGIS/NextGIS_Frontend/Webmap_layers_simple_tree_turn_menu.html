@@ -172,7 +172,7 @@ jQuery(document).ready(function($) {
           if (
           item.item_type === 'group' ||
           (item.item_type === 'root' && item.children.length)
-        ) { name.innerHTML = '📂 '+item.display_name; } else {
+        ) { name.innerHTML = "&#128193 "+item.display_name; } else {
 		  name.innerHTML = item.display_name;
 		  }
           elem.appendChild(name);
