@@ -8,7 +8,7 @@ height = 45
 list_colors = ['43 131 186', '171 221 164', '255 255 191', '253 174 97', '215 25 28']
 
 # Define the list of labels
-label_list = [0, 10, 20, 30, 40, 50]
+label_list = [0, 10, 20, 30, 400, 500]
 
 # Convert the list of colors from strings to tuples of integers
 list_colors = [tuple(map(int, color.split())) for color in list_colors]
@@ -19,8 +19,10 @@ image = Image.new("RGB", (width, height), color="white")
 # Create a drawing object
 draw = ImageDraw.Draw(image)
 
+font_height_legend_dem = 20
+
 # Load a font file and create a font object
-font = ImageFont.truetype("Roboto-Medium.ttf", 20)
+font = ImageFont.truetype("Roboto-Medium.ttf", font_height_legend_dem)
 
 # Draw the gradient filled rectangle
 for x in range(width):
@@ -37,15 +39,23 @@ for x in range(width):
 for i, label in enumerate(label_list):
     label_text = str(label)
     label_size = draw.textsize(label_text)
+    print("label_size: ", label_size)
     label_y = height - label_size[1] - 15
     if i == 0:
         label_x = 1
     elif i == len(label_list) - 1:
-        label_x = width - label_size[0] - 11 # todo calculate and set position for last label on independets from numbers o digits
+        margin_right = font_height_legend_dem // 2 * len(str(label)) + 4
+        print("margin_right: ", margin_right)
+        label_x = width - margin_right
     else:
         label_x = int(i * (width - label_size[0]) / (len(label_list) - 1))
 
-    draw.text((label_x, label_y), label_text, font=font, fill="black")
+    draw.text(
+        xy=(label_x, label_y),
+        text=label_text,
+        font=font,
+        fill="black"
+    )
 
 # Save the image to a file
 image.save("horizontal_gradient_labels.png")
