@@ -3,7 +3,7 @@
 from osgeo import gdal
 
 # Set folder path for result
-folder_path = "/home/spermwhale/Dropbox/MAPS/WD/Beholder/Madagaskar_Agro_202301/raster/"
+folder_path = "C:/Users/admin/Dropbox/MAPS/WD/Beholder/PCA_visual/"
 
 
 for layer in iface.layerTreeView().selectedLayers():
