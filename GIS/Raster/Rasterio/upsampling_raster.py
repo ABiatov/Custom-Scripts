@@ -1,13 +1,13 @@
 import rasterio
 from rasterio.enums import Resampling
 import numpy as np
+sources_dir = f"C:/Users/admin/Dropbox/MAPS/WD/Seliverstov_Oleg/Indexes_20231105/data/MODIS/" 
 
-sources_dir = 'C:/Temp/upsampling/Sources/'
-temp_dir = 'C:/Temp/upsampling/temp/'
-band = 'raster_name'
+temp_dir = 'C:/Users/admin/Dropbox/MAPS/WD/Seliverstov_Oleg/Indexes_20231105/data/MODIS/'
+band = 'MODIS_ndmi_2000_2005_summer_Voznesensk'
 fname = f'{sources_dir}{band}.tif' 
 
-for pixel_size in [300, 30]:
+for pixel_size in [250, 100, 50]:
         with rasterio.open(fname) as dataset:
                 # resample data to target shape
                 data= dataset.read(out_shape=(dataset.count,
